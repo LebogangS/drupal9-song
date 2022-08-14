@@ -1,0 +1,9 @@
+accenture-library:
+  version: 1.x
+  css:
+    theme:
+      src/css/accenture.css: {}
+  js: 
+    src/js/accenture.js: {}
+  dependencies:
+    - core/jquery

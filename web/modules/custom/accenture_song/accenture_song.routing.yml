@@ -1,0 +1,31 @@
+accenture_song.all-products:
+  path: '/admin/content/all-products'
+  defaults:
+    _controller: '\Drupal\accenture_song\Controller\ProductsController::products'
+    _title: 'Products'
+  requirements: 
+    _permission: 'administer content'
+
+accenture_song.delete-product:
+  path: '/admin/content/delete-product/{product_id}'
+  defaults:
+    _controller: '\Drupal\accenture_song\Controller\ProductsController::deleteProduct'
+    _title: 'Product'
+  requirements: 
+    _permission: 'administer content'
+
+accenture_song.create-product:
+  path: '/admin/config/accenture_song/create-product'
+  defaults:
+    _form: '\Drupal\accenture_song\Form\CreateProductForm'
+    _title: 'Create Product'
+  requirements:
+    _permission: 'administer site configuration'
+
+accenture_song.update-product:
+  path: '/admin/config/accenture_song/update-product/{product_id}'
+  defaults:
+    _form: '\Drupal\accenture_song\Form\UpdateProductForm'
+    _title: 'Update Product'
+  requirements:
+    _permission: 'administer site configuration'
