@@ -1,0 +1,36 @@
+<?php
+
+/**
+ * Implements hook_page_attachments().
+ */
+function accenture_song_page_attachments(array &$page) {
+  $page['#attached']['library'][] = 'accenture_song/accenture-library';
+}
+
+/**
+ * Implements hook_form_alter().
+ */
+function accenture_song_form_alter(&$form, &$form_state, $form_id) {
+  // dd($form_id);
+  
+  if ($form_id == 'update_products') {
+    $form['actions']['submit']['#value'] = t('Update Product');
+  }
+  
+  if ($form_id == 'create_product') {
+    $form['actions']['submit']['#value'] = t('Create Product');
+  }
+}
+
+/**
+ * Implements function dd().
+ * We use dd() for debugging.
+ */
+if (!function_exists('dd')) {
+  function dd($parameter) {
+    echo "<pre>";
+    print_r($parameter);
+    echo "</pre>";
+    die();
+  }
+}

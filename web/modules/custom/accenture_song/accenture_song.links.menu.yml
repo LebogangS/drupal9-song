@@ -1,0 +1,6 @@
+accenture_song.admin:
+  title: 'Accenture Song Products'
+  description: 'This takes you to accenture song products'
+  parent: system.admin_config_development
+  route_name: accenture_song.all-products
+  weight: 100

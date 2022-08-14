@@ -1,0 +1,11 @@
+name: Accenture Song
+type: module
+description: 'Exposes a JSON:API endpoint that consumes Product Content Type'
+package: Accenture
+version: 1.0
+core_version_requirement: ^8 || ^9
+libraries:
+  - accenture_song/accenture-library
+dependencies:
+  - drupal:serialization
+  - drupal:jsonapi
