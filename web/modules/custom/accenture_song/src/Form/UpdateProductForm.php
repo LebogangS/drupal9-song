@@ -103,5 +103,4 @@ class UpdateProductForm extends ConfigFormBase {
 
     return $result;
   }
-
 }

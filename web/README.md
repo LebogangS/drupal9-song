@@ -55,5 +55,8 @@ content type:
     Product: Delete revisions
     Product: Edit any content
 
+Go to '/admin/config/services/jsonapi' and check 'Accept all JSON:API create, read, update, 
+and delete operations.' then save
+
 You now have access to the module functionality.
 You can redirect to '/admin/content/all-products' to explore it

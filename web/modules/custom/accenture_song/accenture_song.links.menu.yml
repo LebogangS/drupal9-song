@@ -4,3 +4,4 @@ accenture_song.admin:
   parent: system.admin_config_development
   route_name: accenture_song.all-products
   weight: 100
+  
