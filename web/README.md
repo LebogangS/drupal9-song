@@ -20,14 +20,17 @@ by following below instructions:
 ```bash
 lando init
 ```
-From where should we get your app's codebase?
-    Choose : current working directory
-What recipe do you want to use?
-    Choose : drupal9
-Where is your webroot relative to the init destination?
-    Type: web
-What do you want to call this app?
-    Type any name you like
+
+```python
+# From where should we get your app's codebase?
+Choose : current working directory
+# What recipe do you want to use?
+Choose : drupal9
+# Where is your webroot relative to the init destination?
+Type: web
+# What do you want to call this app?
+Type any name you like
+```
 
 Now run below command:
 
@@ -43,17 +46,22 @@ module.
 
 You need to create a content type called Product and the machine name should be 'product'
 with below fields and field types:
-    field_description => Text (formatted, long)
-    field_price => Number (float)
-    field_sku => Text (plain)
+
+```python
+field_description => Text (formatted, long)
+field_price => Number (float)
+field_sku => Text (plain)
+```
 You can delete the body field. We don't need it. We need the Title field.
 
 In permissions, allow 'Anonymous user' and 'Authenticated user' to below access to Product
 content type:
-    Product: Create new content
-    Product: Delete any content
-    Product: Delete revisions
-    Product: Edit any content
+```python
+Product: Create new content
+Product: Delete any content
+Product: Delete revisions
+Product: Edit any content
+```
 
 Go to '/admin/config/services/jsonapi' and check 'Accept all JSON:API create, read, update, 
 and delete operations.' then save
