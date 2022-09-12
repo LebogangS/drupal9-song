@@ -44,16 +44,6 @@ You don't need any specific database.
 After Drupal successfully installs you can login into the CMS and enable "Accenture Song"
 module.
 
-You need to create a content type called Product and the machine name should be 'product'
-with below fields and field types:
-
-```python
-field_description => Text (formatted, long)
-field_price => Number (float)
-field_sku => Text (plain)
-```
-You can delete the body field. We don't need it. We need the Title field.
-
 In permissions, allow 'Anonymous user' and 'Authenticated user' to below access to Product
 content type:
 ```python
