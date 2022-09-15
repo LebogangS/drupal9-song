@@ -46,23 +46,21 @@ class UpdateProductForm extends ConfigFormBase {
     $form['title'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Name'),
-      '#value' => $product->attributes->title,
+      '#placeholder' => $product->attributes->title,
     ];
     $form['sku'] = [
       '#type' => 'textfield',
       '#title' => $this->t('SKU'),
-      '#value' => $product->attributes->field_sku,
+      '#placeholder' => $product->attributes->field_sku,
     ];
     $form['description'] = [
       '#type' => 'textarea',
       '#title' => $this->t('Description'),
-      '#value' => $product->attributes->field_description->value,
+      '#placeholder' => $product->attributes->field_description->value,
     ];
     $form['price'] = [
-      '#type' => 'number',
-      '#min' => 0,
-      '#step' => 0.01,
-      '#value' => $product->attributes->field_price,
+      '#type' => 'textfield',
+      '#placeholder' => $product->attributes->field_price,
     ];
     return parent::buildForm($form, $form_state);
   }
@@ -70,37 +68,60 @@ class UpdateProductForm extends ConfigFormBase {
   public function submitForm(array &$form, FormStateInterface $form_state) {
     $prod_id = basename($current_uri = \Drupal::request()->getRequestUri());
 
+    $array = [];
+
+    if ($form_state->getValue('title') !== '') {
+      $array["title"] = $form_state->getValue('title');
+    }
+
+    if ($form_state->getValue('description') !== '') {
+      $array["field_description"] = [
+        "value" => $form_state->getValue('description'),
+      ];
+    }
+
+    if ($form_state->getValue('sku') !== '') {
+      $array["field_sku"] = $form_state->getValue('sku');
+    }
+
+    if ($form_state->getValue('price') !== '') {
+      $array["field_price"] = $form_state->getValue('price');
+    }
     $data = [
       "type" =>  "node--product",
-      "attributes" => [
-        "title" => $form_state->getValue('title'),
-        "field_description" => [
-          "value" => $form_state->getValue('description'),
-        ],
-        "field_price" => $form_state->getValue('price'),
-        "field_sku" => $form_state->getValue('sku'),
-      ]
+      "attributes" => $array,
     ];
+
+    dd($data);
+
     $postdata = json_encode( array( "data"=> $data ));
 
-    $ch = curl_init(\Drupal::request()->getSchemeAndHttpHost() . '/jsonapi/node/product/' . $prod_id);
-    curl_setopt($ch, CURLOPT_POST, true);
-    curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-        'Content-Type: application/vnd.api+json',
-        'Accept: application/vnd.api+json'
-      )
-    );
-    curl_setopt($ch, CURLOPT_HEADER, false);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PATCH');
-    curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
-    curl_setopt($ch, CURLOPT_POSTFIELDS, $postdata);
+    try {
+      $ch = curl_init(\Drupal::request()->getSchemeAndHttpHost() . '/jsonapi/node/product/' . $prod_id);
+      curl_setopt($ch, CURLOPT_POST, true);
+      curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+          'Content-Type: application/vnd.api+json',
+          'Accept: application/vnd.api+json'
+        )
+      );
+      curl_setopt($ch, CURLOPT_HEADER, false);
+      curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+      curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PATCH');
+      curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
+      curl_setopt($ch, CURLOPT_POSTFIELDS, $postdata);
 
-    $result = curl_exec($ch);
-    \Drupal::messenger()->addMessage('Product Successfully Updated');
-    header("Location: /admin/content/all-products", true, 301);
-    exit();
+      $result = curl_exec($ch);
+    }
+    catch(Exception $e){
+      throw new Exception("Invalid URL: ",0,$e);
+    }
+    finally {
+      curl_close($ch);
+      \Drupal::messenger()->addMessage('Product Successfully Updated');
+      header("Location: /admin/content/all-products", true, 301);
+      exit();
 
-    return $result;
+      return $result;
+    }
   }
 }
