@@ -40,6 +40,9 @@ class UpdateProductForm extends ConfigFormBase {
   public function buildForm(array $form, FormStateInterface $form_state) {
     $prod_id = basename($current_uri = \Drupal::request()->getRequestUri());
 
+    // $uuid = explode('/', $_SERVER['REQUEST_URI'])[5];
+    // dd($uuid);
+
     $obj = new ProductsController();
     $product = $obj->getProduct($prod_id);
 
@@ -89,10 +92,9 @@ class UpdateProductForm extends ConfigFormBase {
     }
     $data = [
       "type" =>  "node--product",
+      "id" => explode('/', $_SERVER['REQUEST_URI'])[5],
       "attributes" => $array,
     ];
-
-    dd($data);
 
     $postdata = json_encode( array( "data"=> $data ));
 
@@ -101,7 +103,8 @@ class UpdateProductForm extends ConfigFormBase {
       curl_setopt($ch, CURLOPT_POST, true);
       curl_setopt($ch, CURLOPT_HTTPHEADER, array(
           'Content-Type: application/vnd.api+json',
-          'Accept: application/vnd.api+json'
+          'Accept: application/vnd.api+json',
+          'Authorization:Basic YXBpOmFwaQ=='
         )
       );
       curl_setopt($ch, CURLOPT_HEADER, false);
