@@ -40,9 +40,6 @@ class UpdateProductForm extends ConfigFormBase {
   public function buildForm(array $form, FormStateInterface $form_state) {
     $prod_id = basename($current_uri = \Drupal::request()->getRequestUri());
 
-    // $uuid = explode('/', $_SERVER['REQUEST_URI'])[5];
-    // dd($uuid);
-
     $obj = new ProductsController();
     $product = $obj->getProduct($prod_id);
 
