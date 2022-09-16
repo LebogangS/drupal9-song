@@ -57,30 +57,42 @@ class ProductsController extends ControllerBase {
      * Returns all products
      */
     private function getProducts($uri) {
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_URL, $uri);
-        $result = curl_exec($ch);
-        curl_close($ch);
-
-        $obj = json_decode($result);
-        return $obj->data;
+        try {
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_URL, $uri);
+            $result = curl_exec($ch);
+        }
+        catch(Exception $e){
+            throw new Exception("Invalid URL: ",0,$e);
+        }
+        finally {
+            curl_close($ch);
+            $obj = json_decode($result);
+            return $obj->data;
+        }
     }
 
     /**
      * Returns single product
      */
     public function getProduct($pid) {
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_URL, $this->getBaseUrl() . '/jsonapi/node/product/' . $pid);
-        $result = curl_exec($ch);
-        curl_close($ch);
-
-        $obj = json_decode($result);
-        return $obj->data;
+        try {
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_URL, $this->getBaseUrl() . '/jsonapi/node/product/' . $pid);
+            $result = curl_exec($ch);
+        }
+        catch(Exception $e){
+            throw new Exception("Invalid URL: ",0,$e);
+        }
+        finally {
+            curl_close($ch);
+            $obj = json_decode($result);
+            return $obj->data;
+        }
     }
 
     /**
@@ -94,20 +106,26 @@ class ProductsController extends ControllerBase {
      * Deletes a product
      */
     public function deleteProduct($product_id) {
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "DELETE");
-        curl_setopt($ch, CURLOPT_URL, $this->getBaseUrl() . '/jsonapi/node/product/' . $product_id);
-        $result = curl_exec($ch);
-        curl_close($ch);
+        try {
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "DELETE");
+            curl_setopt($ch, CURLOPT_URL, $this->getBaseUrl() . '/jsonapi/node/product/' . $product_id);
+            $result = curl_exec($ch);
+        }
+        catch(Exception $e){
+            throw new Exception("Invalid URL: ",0,$e);
+        }
+        finally {
+            curl_close($ch);
+            $obj = json_decode($result);
 
-        $obj = json_decode($result);
-
-        return new JsonResponse(
-            [
-                'message' => 'Product deleted', 
-            ]
-       );
+            return new JsonResponse(
+                [
+                    'message' => 'Product deleted', 
+                ]
+           );
+        }
     }
 }

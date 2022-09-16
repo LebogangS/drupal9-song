@@ -38,21 +38,30 @@ Now run below command:
 lando start
 ```
 
-You can use any of the links provided now and continue with drupal installation.
-You don't need any specific database.
+You can use any of the links provided to load the site in browser.
 
-After Drupal successfully installs you can login into the CMS and enable "Accenture Song"
-module.
+## There are 2 options to setup the database
 
-You need to create a content type called Product and the machine name should be 'product'
-with below fields and field types:
+## Option 1
 
-```python
-field_description => Text (formatted, long)
-field_price => Number (float)
-field_sku => Text (plain)
+Now run below command to install database from this repository:
+
+```bash
+lando db-import accenturesong.sql.gz
 ```
-You can delete the body field. We don't need it. We need the Title field.
+Refresh your browser to have the new database loaded.
+
+You can use below user details for admin access to the CMS:
+Username: lebogang.selema@accenture.com
+Password: Accenture123!
+
+## Option 2
+
+Continue with manual drupal installation. (You can accept default values and fill in vlaues
+on last step on installation)
+
+After Drupal successfully installs you need to login into the CMS and enable "Accenture Song"
+module.
 
 In permissions, allow 'Anonymous user' and 'Authenticated user' to below access to Product
 content type:
@@ -63,8 +72,24 @@ Product: Delete revisions
 Product: Edit any content
 ```
 
-Go to '/admin/config/services/jsonapi' and check 'Accept all JSON:API create, read, update, 
+Navigate to '/admin/config/services/jsonapi' and check 'Accept all JSON:API create, read, update, 
 and delete operations.' then save
 
-You now have access to the module functionality.
-You can redirect to '/admin/content/all-products' to explore it
+## Populating the database
+
+You can redirect to '/admin/content/all-products' to explore start using this module. (This can also 
+be done by clicking on 'Configuration' link in the menu links then 'Accenture Song Products' link 
+on the config page)
+
+On this product page, you will see a page that looks like 'sample.png' image in this repository.
+If you have used clean installation you will not see any product on this page.
+
+You can add a new product by clicking on 'Add Product' button on this products page. (Which will take you
+to '/admin/config/accenture_song/create-product'). Fill in the fields then click on 'Create Product' to 
+create the product. You will be redirected to Products page with latest content.
+
+Update any product by clicking on 'View' button associated with it. (This will take you to 
+'/admin/config/accenture_song/update-product/{{uuid}}'). Update any field you need to update then click on 
+'Update Product' to update the product. You will be redirected to Products page with latest content.
+
+To delete any product, click on 'Delete' button associated with the product.

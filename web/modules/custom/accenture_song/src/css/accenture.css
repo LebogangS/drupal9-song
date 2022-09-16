@@ -20,6 +20,10 @@ form.create-product, form.update-products {
     background: #3c4241;
 }
 
+.update-products .form-element::placeholder {
+    color: #000;
+}
+
 .products-table .delete-single-product, .read-single-product, .add-single-product {
     color: #fff;
     background: #42f560;
